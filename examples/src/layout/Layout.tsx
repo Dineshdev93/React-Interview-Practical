@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { useContext } from "react";
-import { ThemeContext } from "../../context/ThemeContext";
+import { ThemeContext } from "../context/ThemeContext";
 
 // ---------------------------
 // Types
@@ -14,16 +14,20 @@ interface LayoutProps {
 // Component
 // ---------------------------
 const Layout = ({ children }: LayoutProps) => {
-  const themecontext = useContext(ThemeContext)
- 
-  const {theme , toggletheme} = themecontext  
+  const themecontext = useContext(ThemeContext);
+
+  const { theme, toggletheme } = themecontext;
   return (
-    
     <div className="d-flex flex-column min-vh-100">
       {/* Navbar */}
-      <nav className={`navbar navbar-expand-lg ${theme === "dark" ? "navbar-dark bg-dark" : "navbar-dark bg-light"}`}>
+      <nav
+        className={`navbar navbar-expand-lg ${theme === "dark" ? "navbar-dark bg-dark" : "navbar-dark bg-light"}`}
+      >
         <div className="container-fluid">
-          <NavLink className="navbar-brand fw-bold text-white" to="/">
+          <NavLink
+            className={`${theme === "dark" ? "navbar-brand fw-bold text-white" : "navbar-brand fw-bold text-dark"}`}
+            to="/"
+          >
             MyApp
           </NavLink>
 
@@ -44,9 +48,7 @@ const Layout = ({ children }: LayoutProps) => {
               <li className="nav-item">
                 <NavLink
                   to="/"
-                  className={({ isActive }) =>
-                    `nav-link text-white ${isActive ? "fw-bold active" : ""}`
-                  }
+                  className={`${theme === "dark" ? "nav-link text-white fw-bold" : "nav-link text-dark fw-bold"}`}
                 >
                   Home
                 </NavLink>
@@ -55,9 +57,7 @@ const Layout = ({ children }: LayoutProps) => {
               <li className="nav-item">
                 <NavLink
                   to="/debounce"
-                  className={({ isActive }) =>
-                    `nav-link text-white ${isActive ? "fw-bold active" : ""}`
-                  }
+                  className={`${theme === "dark" ? "nav-link text-white fw-bold" : "nav-link text-dark fw-bold"}`}
                 >
                   Debounce
                 </NavLink>
@@ -66,26 +66,48 @@ const Layout = ({ children }: LayoutProps) => {
               <li className="nav-item">
                 <NavLink
                   to="/stlifting"
-                  className={({ isActive }) =>
-                    `nav-link text-white ${isActive ? "fw-bold active" : ""}`
-                  }
+                  className={`${theme === "dark" ? "nav-link text-white fw-bold" : "nav-link text-dark fw-bold"}`}
                 >
                   State Lifting
                 </NavLink>
               </li>
               <li className="nav-item">
-                  <div className="form-check form-switch">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      role="switch"
-                      value={theme}
-                      onChange={toggletheme}
-                      checked={theme === "dark"}
-                      id="switchCheckDefault1"
-                      style={{marginTop: '11px'}}
-                    />
-                  </div>
+                <NavLink
+                  to={"/conditionalRendering"}
+                  className={`${theme === "dark" ? "nav-link text-white fw-bold" : "nav-link text-dark fw-bold"}`}
+                >
+                  conditional Rendering
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to={"/apifetcher"}
+                  className={`${theme === "dark" ? "nav-link text-white fw-bold" : "nav-link text-dark fw-bold"}`}
+                >
+                  Api Fetcher
+                </NavLink>
+              </li>
+               <li>
+                <NavLink
+                  to={"/todo"}
+                  className={`${theme === "dark" ? "nav-link text-white fw-bold" : "nav-link text-dark fw-bold"}`}
+                >
+                  Todo
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <div className="form-check form-switch">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    value={theme}
+                    onChange={toggletheme}
+                    checked={theme === "dark"}
+                    id="switchCheckDefault1"
+                    style={{ marginTop: "11px" }}
+                  />
+                </div>
               </li>
             </ul>
           </div>
