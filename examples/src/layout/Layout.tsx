@@ -2,6 +2,8 @@ import type { ReactNode } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
+import { useDispatchContext, useStatecontetx } from "../AppContext";
+import { setThemeview } from "../AppContext/action";
 
 // ---------------------------
 // Types
@@ -14,18 +16,27 @@ interface LayoutProps {
 // Component
 // ---------------------------
 const Layout = ({ children }: LayoutProps) => {
-  const themecontext = useContext(ThemeContext);
+  const { themeState } = useStatecontetx();
+  const dispatch = useDispatchContext();
 
-  const { theme, toggletheme } = themecontext;
+  console.log(themeState.themeview);
+
+  const handletoggle = (theme: React.ChangeEvent<HTMLInputElement>) => {
+    const value = theme.target.value;
+    const newthemevalue = value === "dark" ? "light" : "dark";
+    dispatch(setThemeview(newthemevalue));
+  };
+
+  // const { theme, toggletheme } = themecontext;
   return (
     <div className="d-flex flex-column min-vh-100">
       {/* Navbar */}
       <nav
-        className={`navbar navbar-expand-lg ${theme === "dark" ? "navbar-dark bg-dark" : "navbar-dark bg-light"}`}
+        className={`navbar navbar-expand-lg ${themeState.themeview === "dark" ? "navbar-dark bg-dark" : "navbar-dark bg-light"}`}
       >
         <div className="container-fluid">
           <NavLink
-            className={`${theme === "dark" ? "navbar-brand fw-bold text-white" : "navbar-brand fw-bold text-dark"}`}
+            className={`${themeState.themeview === "dark" ? "navbar-brand fw-bold text-white" : "navbar-brand fw-bold text-dark"}`}
             to="/"
           >
             MyApp
@@ -48,7 +59,7 @@ const Layout = ({ children }: LayoutProps) => {
               <li className="nav-item">
                 <NavLink
                   to="/"
-                  className={`${theme === "dark" ? "nav-link text-white fw-bold" : "nav-link text-dark fw-bold"}`}
+                  className={`${themeState.themeview === "dark" ? "nav-link text-white fw-bold" : "nav-link text-dark fw-bold"}`}
                 >
                   Home
                 </NavLink>
@@ -57,7 +68,7 @@ const Layout = ({ children }: LayoutProps) => {
               <li className="nav-item">
                 <NavLink
                   to="/debounce"
-                  className={`${theme === "dark" ? "nav-link text-white fw-bold" : "nav-link text-dark fw-bold"}`}
+                  className={`${themeState.themeview === "dark" ? "nav-link text-white fw-bold" : "nav-link text-dark fw-bold"}`}
                 >
                   Debounce
                 </NavLink>
@@ -66,7 +77,7 @@ const Layout = ({ children }: LayoutProps) => {
               <li className="nav-item">
                 <NavLink
                   to="/stlifting"
-                  className={`${theme === "dark" ? "nav-link text-white fw-bold" : "nav-link text-dark fw-bold"}`}
+                  className={`${themeState.themeview === "dark" ? "nav-link text-white fw-bold" : "nav-link text-dark fw-bold"}`}
                 >
                   State Lifting
                 </NavLink>
@@ -74,7 +85,7 @@ const Layout = ({ children }: LayoutProps) => {
               <li className="nav-item">
                 <NavLink
                   to={"/conditionalRendering"}
-                  className={`${theme === "dark" ? "nav-link text-white fw-bold" : "nav-link text-dark fw-bold"}`}
+                  className={`${themeState.themeview === "dark" ? "nav-link text-white fw-bold" : "nav-link text-dark fw-bold"}`}
                 >
                   conditional Rendering
                 </NavLink>
@@ -82,15 +93,15 @@ const Layout = ({ children }: LayoutProps) => {
               <li>
                 <NavLink
                   to={"/apifetcher"}
-                  className={`${theme === "dark" ? "nav-link text-white fw-bold" : "nav-link text-dark fw-bold"}`}
+                  className={`${themeState.themeview === "dark" ? "nav-link text-white fw-bold" : "nav-link text-dark fw-bold"}`}
                 >
                   Api Fetcher
                 </NavLink>
               </li>
-               <li>
+              <li>
                 <NavLink
                   to={"/todo"}
-                  className={`${theme === "dark" ? "nav-link text-white fw-bold" : "nav-link text-dark fw-bold"}`}
+                  className={`${themeState.themeview === "dark" ? "nav-link text-white fw-bold" : "nav-link text-dark fw-bold"}`}
                 >
                   Todo
                 </NavLink>
@@ -101,9 +112,9 @@ const Layout = ({ children }: LayoutProps) => {
                     className="form-check-input"
                     type="checkbox"
                     role="switch"
-                    value={theme}
-                    onChange={toggletheme}
-                    checked={theme === "dark"}
+                    value={themeState.themeview}
+                    onChange={handletoggle}
+                    checked={themeState.themeview === "dark"}
                     id="switchCheckDefault1"
                     style={{ marginTop: "11px" }}
                   />

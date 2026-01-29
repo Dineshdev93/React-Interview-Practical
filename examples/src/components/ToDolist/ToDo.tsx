@@ -4,12 +4,12 @@ import type { Todo } from "../../types/type";
 
 export const ToDo = () => {
   const contextCalues = useTodoContext();
-  const [filtered, setFiltered] = useState<Todo[]>(contextCalues.list);
+  const {list , setList} = contextCalues ; 
   const [inputval, setInputVal] = useState<string>("");
 
   const deletefun = (id: number) => {  
     const result = contextCalues?.list.filter((resid) => resid.id !== id);
-    setFiltered(result);
+    setList(result);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +21,7 @@ export const ToDo = () => {
           id : Date.now() , 
           title : inputval.trim()
       }
-      setFiltered((prev)=> [...prev , newTodo])
+      setList((prev)=> [...prev , newTodo])
       setInputVal("")
   };
 
@@ -58,7 +58,7 @@ export const ToDo = () => {
                 {/* Todo List */}
                 <ul className="list-group">
                   <li className="list-group-item d-flex flex-column">
-                    {filtered.map((item, key) => {
+                    {list.map((item, key) => {
                       return (
                         <div className="d-flex justify-content-between gap-2 align-items-center">
                           <span>{item.title}</span>
